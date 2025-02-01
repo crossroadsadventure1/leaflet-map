@@ -1,0 +1,74 @@
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<!-- Leaflet JavaScript -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Leaflet Fullscreen Plugin CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-fullscreen/1.3.0/leaflet.fullscreen.min.css" />
+<!-- Leaflet Fullscreen Plugin JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-fullscreen/1.3.0/leaflet.fullscreen.min.js"></script>
+
+<div id="map" style="width: 100%; height: 2160px;"></div>
+
+<script>
+  var map = L.map('map').setView([35.9208, 74.3082], 7);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  var waypoints = [
+    { name: "Day 1: Islamabad", lat: 33.6844, lon: 73.0479 },
+    { name: "Day 2: Skardu", lat: 35.3354, lon: 75.5519 },
+    { name: "Day 3: Askole", lat: 35.6895, lon: 75.8122 },
+    { name: "Day 4: Jhula", lat: 35.7250, lon: 75.8500 },
+    { name: "Day 5: Bardumal", lat: 35.7500, lon: 75.8700 },
+    { name: "Day 6: Paiju", lat: 35.7880, lon: 75.9040 },
+    { name: "Day 7: Khoburtse", lat: 35.8250, lon: 75.9400 },
+    { name: "Day 8: Urdukas", lat: 35.8600, lon: 75.9700 },
+    { name: "Day 9: Acclimatization at Urdukas", lat: 35.8600, lon: 75.9700 },
+    { name: "Day 10: Goro 2", lat: 35.9000, lon: 76.0000 },
+    { name: "Day 11: Concordia", lat: 35.9300, lon: 76.0400 },
+    { name: "Day 12: K2 Base Camp & Broad Peak", lat: 35.8800, lon: 76.5100 },
+    { name: "Day 13: Return to Concordia", lat: 35.9300, lon: 76.0400 },
+    { name: "Day 14: Goro 1", lat: 35.8800, lon: 75.9700 },
+    { name: "Day 15: Khoburtse", lat: 35.8250, lon: 75.9400 },
+    { name: "Day 16: Paiju", lat: 35.7880, lon: 75.9040 },
+    { name: "Day 17: Jhola", lat: 35.7250, lon: 75.8500 },
+    { name: "Day 18: Askole", lat: 35.6895, lon: 75.8122 },
+    { name: "Day 19: Skardu", lat: 35.3354, lon: 75.5519 },
+    { name: "Day 20-21: Islamabad", lat: 33.6844, lon: 73.0479 },
+    { name: "Day 22: Free Day in Islamabad", lat: 33.6844, lon: 73.0479 },
+    { name: "Day 23: Islamabad Intl Airport", lat: 33.5603, lon: 72.8516 }
+  ];
+
+  waypoints.forEach(function(waypoint) {
+    L.marker([waypoint.lat, waypoint.lon]).addTo(map)
+      .bindTooltip(waypoint.name, { permanent: true, className: 'waypoint-tooltip' })
+      .openTooltip();
+  });
+
+  var routeLine = waypoints.map(wp => [wp.lat, wp.lon]);
+  var routePath = L.polyline(routeLine, { color: 'blue', weight: 4 }).addTo(map);
+  map.fitBounds(routePath.getBounds(), { padding: [60, 60] });
+
+  map.addControl(new L.Control.Fullscreen());
+</script>
+
+<style>
+  .waypoint-tooltip {
+    border: 1px solid #0078A8;
+    padding: 5px;
+    font-size: 10px;
+    font-weight: bold;
+    color: #0078A8;
+    opacity: 0.8;
+  }
+
+   @media (max-width: 768px) {
+    #map {
+      height: 4000vh;
+    }
+  }
+</style>
