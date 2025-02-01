@@ -9,7 +9,7 @@
 <!-- Leaflet Fullscreen Plugin JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-fullscreen/1.3.0/leaflet.fullscreen.min.js"></script>
 
-<div id="map" style="width: 100%; height: 2160px;"></div>
+<div id="map" style="width: 100%; height: 2500px;"></div>
 
 <script>
   var map = L.map('map').setView([35.9208, 74.3082], 7);
@@ -19,21 +19,24 @@
   }).addTo(map);
 
   var waypoints = [
-    { name: "Day 1: Islamabad (540m)", lat: 33.7000, lon: 73.0500 },
-    { name: "Day 2: Chitral (1,500m)", lat: 35.8500, lon: 71.7880 },
-    { name: "Day 3: Shagrom (2,900m)", lat: 36.0000, lon: 72.3000 },
-    { name: "Day 4: Sheniak Base Camp (3,540m)", lat: 36.0500, lon: 72.5000 },
-    { name: "Day 5: Shughur Baisun (4,038m)", lat: 36.1000, lon: 72.7000 },
-    { name: "Day 6: Terich Mir Base Camp (4,700m)", lat: 36.1500, lon: 72.9000 },
-    { name: "Day 7: Exploration Day", lat: 36.1550, lon: 72.9050 },
-    { name: "Day 8: Descend to Shughur Baisun", lat: 36.1000, lon: 72.7000 },
-    { name: "Day 9: Trekking Down to Sheniak", lat: 36.0500, lon: 72.5000 },
-    { name: "Day 10: Return to Shagrom", lat: 36.0000, lon: 72.3000 },
-    { name: "Day 11: Drive Back to Chitral", lat: 35.8500, lon: 71.7880 },
-    { name: "Day 12: Explore the Kalash Region", lat: 35.8700, lon: 71.7500 },
-    { name: "Day 13: Flight to Peshawar", lat: 34.0070, lon: 71.5700 },
-    { name: "Day 14: Return to Islamabad", lat: 33.7050, lon: 73.0650 },
-    { name: "Day 15: Islamabad Intl Airport", lat: 33.5603, lon: 72.8516 }
+    { name: "Day 1: Islamabad", lat: 33.6844, lon: 73.0479 },
+    { name: "Day 2: Chilas", lat: 35.4200, lon: 74.1050 },
+    { name: "Day 2: Raikot", lat: 35.4200, lon: 74.1055 },
+    { name: "Day 3: Gulmit, Gojal", lat: 36.3720, lon: 74.8692 },
+    { name: "Day 4: Ghulkin, Gojal", lat: 36.4062, lon: 74.7980 },
+    { name: "Day 5: Borith", lat: 36.4684, lon: 74.8123 },
+    { name: "Day 5: Passughar", lat: 36.5024, lon: 74.8401 },
+    { name: "Day 6: Luxdur", lat: 36.5371, lon: 74.8497 },
+    { name: "Day 7: Patundas", lat: 36.5542, lon: 74.8674 },
+    { name: "Day 8: Mulungghil", lat: 36.5793, lon: 74.8801 },
+    { name: "Day 9: Passu", lat: 36.4135, lon: 74.8141 },
+    { name: "Day 9: Hunza", lat: 36.3167, lon: 74.6500 },
+    { name: "Day 10: Ultar", lat: 36.3208, lon: 74.5520 },
+    { name: "Day 10: Karimabad", lat: 36.2952, lon: 74.3137 },
+    { name: "Day 11: Baltit Fort, Hunza", lat: 36.2904, lon: 74.3163 },
+    { name: "Day 12: Bisham", lat: 35.2220, lon: 72.4826 },
+    { name: "Day 13: Return Islamabad", lat: 33.6849, lon: 73.0500 },
+    { name: "Day 14: Islamabad Intl Airport", lat: 33.5603, lon: 72.8516 }
   ];
 
   waypoints.forEach(function(waypoint) {
@@ -65,3 +68,4 @@
     }
   }
 </style>
+
