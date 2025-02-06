@@ -1,1 +1,59 @@
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<!-- Leaflet JavaScript -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Leaflet Fullscreen Plugin CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-fullscreen/1.3.0/leaflet.fullscreen.min.css" />
+<!-- Leaflet Fullscreen Plugin JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-fullscreen/1.3.0/leaflet.fullscreen.min.js"></script>
+
+<div id="map" style="width: 100%; height: 700px;"></div>
+
+<script>
+  var map = L.map('map').setView([35.9208, 74.3082], 6);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors',
+    lang: 'en'  // Ensure English language settings
+  }).addTo(map);
+
+  var waypoints = [
+    { name: "Day 1-2: Islamabad", lat: 33.6844, lon: 73.0479 },
+    { name: "Day 3-5: Shigar/Gilgit/Hunza", lat: 36.3253, lon: 74.6843 },
+    { name: "Day 6-7: Attabad Lake/Gojal Valley", lat: 36.4173, lon: 74.8560 },
+    { name: "Day 8-9: Gilgit/Islamabad", lat: 35.9208, lon: 74.3082 }
+  ];
+
+  waypoints.forEach(function(waypoint) {
+    L.marker([waypoint.lat, waypoint.lon]).addTo(map)
+      .bindTooltip(waypoint.name, { permanent: true, className: 'waypoint-tooltip' })
+      .openTooltip();
+  });
+
+  var routeLine = waypoints.map(wp => [wp.lat, wp.lon]);
+  var routePath = L.polyline(routeLine, { color: 'blue', weight: 4 }).addTo(map);
+  map.fitBounds(routePath.getBounds(), { padding: [60, 60] });
+
+  map.addControl(new L.Control.Fullscreen());
+</script>
+
+<style>
+  .waypoint-tooltip {
+    border: 1px solid #0078A8;
+    padding: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #0078A8;
+    background: white;
+    opacity: 0.9;
+  }
+
+  @media (max-width: 768px) {
+    #map {
+      height: 500px;
+    }
+  }
+</style>
 
