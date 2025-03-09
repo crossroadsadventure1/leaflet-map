@@ -1,0 +1,65 @@
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<!-- Leaflet JavaScript -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Leaflet Fullscreen Plugin CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-fullscreen/1.3.0/leaflet.fullscreen.min.css" />
+<!-- Leaflet Fullscreen Plugin JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-fullscreen/1.3.0/leaflet.fullscreen.min.js"></script>
+
+<div id="map" style="width: 100%; height: 2350px;"></div>
+
+<script>
+  var map = L.map('map').setView([35.9208, 74.3082], 7);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  var waypoints = [
+    { name: "Day 1: Arrival in Islamabad", lat: 33.6844, lon: 73.0479 },
+    { name: "Day 2: Islamabad - Takht-i-Bahi - Swat Valley", lat: 34.7950, lon: 72.3525 },
+    { name: "Day 3: Swat - Chitral", lat: 35.8511, lon: 71.7886 },
+    { name: "Day 4: Chitral - Bumburet Valley", lat: 35.6923, lon: 71.7280 },
+    { name: "Day 5: Chilam Joshi Festival in Bumburet", lat: 35.7000, lon: 71.7300 },
+    { name: "Day 6: Explore Chitral", lat: 35.8511, lon: 71.7886 },
+    { name: "Day 7: Chitral - Gupis Valley", lat: 36.1333, lon: 73.1667 },
+    { name: "Day 8: Gupis - Karimabad", lat: 36.3075, lon: 74.6509 },
+    { name: "Day 9: Discover Hunza", lat: 36.3167, lon: 74.6500 },
+    { name: "Day 10: Gojal Valley Expedition", lat: 36.4062, lon: 74.7980 },
+    { name: "Day 11: Passu - Bisham", lat: 35.2220, lon: 72.4826 },
+    { name: "Day 12: Bisham - Taxila - Islamabad", lat: 33.6844, lon: 73.0479 },
+    { name: "Day 13: Islamabad City Experience & Departure", lat: 33.5603, lon: 72.8516 }
+  ];
+
+  waypoints.forEach(function(waypoint) {
+    L.marker([waypoint.lat, waypoint.lon]).addTo(map)
+      .bindTooltip(waypoint.name, { permanent: true, className: 'waypoint-tooltip' })
+      .openTooltip();
+  });
+
+  var routeLine = waypoints.map(wp => [wp.lat, wp.lon]);
+  var routePath = L.polyline(routeLine, { color: 'blue', weight: 4 }).addTo(map);
+  map.fitBounds(routePath.getBounds(), { padding: [60, 60] });
+
+  map.addControl(new L.Control.Fullscreen());
+</script>
+
+<style>
+  .waypoint-tooltip {
+    border: 1px solid #0078A8;
+    padding: 5px;
+    font-size: 10px;
+    font-weight: bold;
+    color: #0078A8;
+    opacity: 0.8;
+  }
+
+   @media (max-width: 768px) {
+    #map {
+      height: 4000vh;
+    }
+  }
+</style>
