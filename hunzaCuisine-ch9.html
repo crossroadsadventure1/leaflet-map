@@ -1,0 +1,61 @@
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<!-- Leaflet JavaScript -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Leaflet Fullscreen Plugin CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-fullscreen/1.3.0/leaflet.fullscreen.min.css" />
+<!-- Leaflet Fullscreen Plugin JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-fullscreen/1.3.0/leaflet.fullscreen.min.js"></script>
+
+<div id="map" style="width: 100%; height: 1870px;"></div>
+
+<script>
+  var map = L.map('map').setView([33.6844, 73.0479], 7);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  var waypoints = [
+    { name: "Day 1: Welcome to Islamabad, Welcome to Pakistan!", lat: 33.6844, lon: 73.0479 },
+    { name: "Day 2: Islamabad to Gilgit (Scenic Flight)", lat: 35.3, lon: 74.35 }, // Approximate location for Gilgit
+    { name: "Day 3: Gilgit to Hunza", lat: 36.3, lon: 74.3 }, // Approximate location for Hunza
+    { name: "Day 4: Full Day in Hunza", lat: 36.3, lon: 74.3 },
+    { name: "Day 5: Hunza to Attabad Lake", lat: 36.4, lon: 74.6 }, // Approximate location for Attabad Lake
+    { name: "Day 6: Attabad Lake to Ghulkin Village (Cultural Experience)", lat: 36.5, lon: 74.7 }, // Ghulkin Village approx location
+    { name: "Day 7: Hussaini to Gilgit", lat: 36.5, lon: 74.8 }, // Approximate location for Hussaini
+    { name: "Day 8: Gilgit to Islamabad (Domestic Flight)", lat: 33.6844, lon: 73.0479 },
+    { name: "Day 9: Departure", lat: 33.6844, lon: 73.0479 }
+  ];
+
+  waypoints.forEach(function(waypoint) {
+    L.marker([waypoint.lat, waypoint.lon]).addTo(map)
+      .bindTooltip(waypoint.name, { permanent: true, className: 'waypoint-tooltip' })
+      .openTooltip();
+  });
+
+  var routeLine = waypoints.map(wp => [wp.lat, wp.lon]);
+  var routePath = L.polyline(routeLine, { color: 'blue', weight: 4 }).addTo(map);
+  map.fitBounds(routePath.getBounds(), { padding: [60, 60] });
+
+  map.addControl(new L.Control.Fullscreen());
+</script>
+
+<style>
+  .waypoint-tooltip {
+    border: 1px solid #0078A8;
+    padding: 5px;
+    font-size: 10px;
+    font-weight: bold;
+    color: #0078A8;
+    opacity: 0.8;
+  }
+
+   @media (max-width: 768px) {
+    #map {
+      height: 4000vh;
+    }
+  }
+</style>
