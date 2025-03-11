@@ -1,0 +1,58 @@
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<!-- Leaflet JavaScript -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Leaflet Fullscreen Plugin CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-fullscreen/1.3.0/leaflet.fullscreen.min.css" />
+
+<!-- Leaflet Fullscreen Plugin JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-fullscreen/1.3.0/leaflet.fullscreen.min.js"></script>
+
+<div id="map" style="width: 100%; height: 1200px;"></div>
+
+<script>
+  var map = L.map('map').setView([34.0151, 73.6655], 7);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  var waypoints = [
+    { name: "Day 1: Islamabad to Muzaffarabad", lat: 34.3700, lon: 73.4711 },
+    { name: "Day 2: Muzaffarabad to Karen", lat: 34.8223, lon: 73.9340 },
+    { name: "Day 3: Karen to Sharda", lat: 34.7906, lon: 74.0620 },
+    { name: "Day 4: Arang Kel to Dowarian", lat: 34.8340, lon: 74.2000 },
+    { name: "Day 5: Ratti Gali Lake to Taobat", lat: 34.8692, lon: 74.4667 },
+    { name: "Day 6: Taobat to Shoghran", lat: 34.6300, lon: 73.4600 },
+    { name: "Day 7: Shoghran to Siri Paye", lat: 34.6611, lon: 73.4500 },
+    { name: "Day 8: Transfer to Nathia Gali", lat: 34.0723, lon: 73.3817 },
+    { name: "Day 9: Exploring Nathia Gali", lat: 34.0869, lon: 73.3731 },
+    { name: "Day 10: Nathia Gali to Islamabad", lat: 33.6844, lon: 73.0479 },
+    { name: "Day 11: Rawalpindi to Airport", lat: 33.5603, lon: 72.8516 }
+  ];
+
+  waypoints.forEach(function(waypoint) {
+    L.marker([waypoint.lat, waypoint.lon]).addTo(map)
+      .bindTooltip(waypoint.name, { permanent: true, className: 'waypoint-tooltip' })
+      .openTooltip();
+  });
+
+  var routeLine = waypoints.map(wp => [wp.lat, wp.lon]);
+  var routePath = L.polyline(routeLine, { color: 'blue', weight: 4 }).addTo(map);
+  map.fitBounds(routePath.getBounds(), { padding: [60, 60] });
+
+  map.addControl(new L.Control.Fullscreen());
+</script>
+
+<style>
+  .waypoint-tooltip {
+    border: 1px solid #0078A8;
+    padding: 5px;
+    font-size: 10px;
+    font-weight: bold;
+    color: #0078A8;
+    opacity: 0.8;
+  }
+</style>
