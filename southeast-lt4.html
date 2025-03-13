@@ -1,0 +1,63 @@
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<!-- Leaflet JavaScript -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Leaflet Fullscreen Plugin CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-fullscreen/1.3.0/leaflet.fullscreen.min.css" />
+
+<!-- Leaflet Fullscreen Plugin JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-fullscreen/1.3.0/leaflet.fullscreen.min.js"></script>
+
+<div id="map" style="width: 100%; height: 1100px;"></div>
+
+<script>
+  var map = L.map('map').setView([30.3753, 69.3451], 6);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+var waypoints = [
+    { name: "Day 1: Arrival in Karachi", lat: 24.8607, lon: 67.0011 },
+    { name: "Day 2: Karachi to Hyderabad", lat: 25.3792, lon: 68.3683 },
+    { name: "Day 3: Hyderabad to Larkana", lat: 27.5602, lon: 68.2264 },
+    { name: "Day 4: Larkana to Sukkur", lat: 27.7139, lon: 68.8344 },
+    { name: "Day 5: Explore Sukkur", lat: 27.7004, lon: 68.8570 },
+    { name: "Day 6: Sukkur to Derawar", lat: 28.7787, lon: 71.3480 },
+    { name: "Day 7: Derawar to Multan", lat: 30.1575, lon: 71.5249 },
+    { name: "Day 8: Multan to Lahore", lat: 31.5497, lon: 74.3436 },
+    { name: "Day 9: Lahore Sightseeing and Departure", lat: 31.5451, lon: 74.3407 }
+];
+
+
+  waypoints.forEach(function(waypoint) {
+    L.marker([waypoint.lat, waypoint.lon]).addTo(map)
+      .bindTooltip(waypoint.name, { permanent: true, className: 'waypoint-tooltip' })
+      .openTooltip();
+  });
+
+  var routeLine = waypoints.map(wp => [wp.lat, wp.lon]);
+  var routePath = L.polyline(routeLine, { color: 'blue', weight: 4 }).addTo(map);
+  map.fitBounds(routePath.getBounds(), { padding: [60, 60] });
+
+  map.addControl(new L.Control.Fullscreen());
+</script>
+
+<style>
+  .waypoint-tooltip {
+    border: 1px solid #0078A8;
+    padding: 5px;
+    font-size: 10px;
+    font-weight: bold;
+    color: #0078A8;
+    opacity: 0.8;
+  }
+
+  @media (max-width: 768px) {
+    #map {
+      height: 4000vh;
+    }
+  }
+</style>
