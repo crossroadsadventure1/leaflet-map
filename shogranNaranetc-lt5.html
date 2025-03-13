@@ -1,0 +1,64 @@
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<!-- Leaflet JavaScript -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Leaflet Fullscreen Plugin CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-fullscreen/1.3.0/leaflet.fullscreen.min.css" />
+
+<!-- Leaflet Fullscreen Plugin JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-fullscreen/1.3.0/leaflet.fullscreen.min.js"></script>
+
+<div id="map" style="width: 100%; height: 1100px;"></div>
+
+<script>
+  var map = L.map('map').setView([30.3753, 69.3451], 6);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+var waypoints = [
+    { name: "Day 1: Arrival in Islamabad", lat: 33.6844, lon: 73.0479 },
+    { name: "Day 2: Shogran to Sri Paya Meadows", lat: 34.6401, lon: 73.4703 },
+    { name: "Day 3: Exploration of Naran Valley", lat: 34.9070, lon: 73.6555 },
+    { name: "Day 4: Chilas to Hunza", lat: 35.4199, lon: 74.3007 },
+    { name: "Day 5: Hunza Valley Exploration", lat: 36.3167, lon: 74.6667 },
+    { name: "Day 6: Hunza to Passu", lat: 36.4768, lon: 74.8657 },
+    { name: "Day 7: Passu to Attabad Lake", lat: 36.3900, lon: 74.8175 },
+    { name: "Day 8: Attabad Lake to Islamabad", lat: 34.9156, lon: 72.8618 },
+    { name: "Day 9: Islamabad Exploration", lat: 33.6938, lon: 73.0652 },
+    { name: "Day 10: Leisure in Islamabad", lat: 33.6844, lon: 73.0479 },
+    { name: "Day 11: Departure", lat: 33.5603, lon: 72.8516 }
+];
+
+  waypoints.forEach(function(waypoint) {
+    L.marker([waypoint.lat, waypoint.lon]).addTo(map)
+      .bindTooltip(waypoint.name, { permanent: true, className: 'waypoint-tooltip' })
+      .openTooltip();
+  });
+
+  var routeLine = waypoints.map(wp => [wp.lat, wp.lon]);
+  var routePath = L.polyline(routeLine, { color: 'blue', weight: 4 }).addTo(map);
+  map.fitBounds(routePath.getBounds(), { padding: [60, 60] });
+
+  map.addControl(new L.Control.Fullscreen());
+</script>
+
+<style>
+  .waypoint-tooltip {
+    border: 1px solid #0078A8;
+    padding: 5px;
+    font-size: 10px;
+    font-weight: bold;
+    color: #0078A8;
+    opacity: 0.8;
+  }
+
+  @media (max-width: 768px) {
+    #map {
+      height: 4000vh;
+    }
+  }
+</style>
