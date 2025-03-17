@@ -1,0 +1,66 @@
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<!-- Leaflet JavaScript -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Leaflet Fullscreen Plugin CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-fullscreen/1.3.0/leaflet.fullscreen.min.css" />
+<!-- Leaflet Fullscreen Plugin JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-fullscreen/1.3.0/leaflet.fullscreen.min.js"></script>
+
+<div id="map" style="width: 100%; height: 1640px;"></div>
+
+<script>
+  var map = L.map('map').setView([35.9208, 74.3082], 7);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  var waypoints = [
+    { name: "Day 1: Arrival in Islamabad", lat: 33.6844, lon: 73.0479 },
+    { name: "Day 2: Islamabad - Taxila - Peshawar", lat: 33.7483, lon: 72.8231 },
+    { name: "Day 3: Peshawar Museum and City Experience", lat: 34.008, lon: 71.5785 },
+    { name: "Day 4: Peshawar - Takht Bhai - Swat Valley", lat: 34.3277, lon: 71.9478 },
+    { name: "Day 5: Explore Buddhist Remains in Swat", lat: 35.222, lon: 72.4258 },
+    { name: "Day 6: Swat - Shangla - Bisham", lat: 35.0281, lon: 72.6151 },
+    { name: "Day 7: Bisham - Gilgit via Karakoram Highway", lat: 35.9187, lon: 74.3124 },
+    { name: "Day 8: Gilgit - Kargah Buddha - Hunza", lat: 36.3184, lon: 74.6765 },
+    { name: "Day 9: Hunza Full Day", lat: 36.3187, lon: 74.6500 },
+    { name: "Day 10: Hunza - Attabad Lake - Gulmit - Ghulkin", lat: 36.4073, lon: 74.8135 },
+    { name: "Day 11: Ghulkin - Passu - Gilgit", lat: 36.4184, lon: 74.4917 },
+    { name: "Day 12: Gilgit - Bisham", lat: 35.9187, lon: 72.4898 },
+    { name: "Day 13: Bisham - Islamabad", lat: 33.6844, lon: 73.0479 },
+    { name: "Day 14: Airport Transfer for International Departure", lat: 33.5603, lon: 72.8516 }
+  ];
+
+  waypoints.forEach(function(waypoint) {
+    L.marker([waypoint.lat, waypoint.lon]).addTo(map)
+      .bindTooltip(waypoint.name, { permanent: true, className: 'waypoint-tooltip' })
+      .openTooltip();
+  });
+
+  var routeLine = waypoints.map(wp => [wp.lat, wp.lon]);
+  var routePath = L.polyline(routeLine, { color: 'blue', weight: 4 }).addTo(map);
+  map.fitBounds(routePath.getBounds(), { padding: [60, 60] });
+
+  map.addControl(new L.Control.Fullscreen());
+</script>
+
+<style>
+  .waypoint-tooltip {
+    border: 1px solid #0078A8;
+    padding: 5px;
+    font-size: 10px;
+    font-weight: bold;
+    color: #0078A8;
+    opacity: 0.8;
+  }
+
+   @media (max-width: 768px) {
+    #map {
+      height: 4000vh;
+    }
+  }
+</style>
