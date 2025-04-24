@@ -1,0 +1,70 @@
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<!-- Fullscreen Plugin -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-fullscreen/1.3.0/leaflet.fullscreen.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-fullscreen/1.3.0/leaflet.fullscreen.min.js"></script>
+
+<div id="map" style="width: 100%; height: 3150px;"></div>
+
+<script>
+  var map = L.map('map').setView([35.9208, 74.3082], 6);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  var waypoints = [
+    { name: "Day 1: Arrival in Islamabad", lat: 33.6844, lon: 73.0479 },
+    { name: "Day 2: Explore Islamabad", lat: 33.6938, lon: 73.0652 },
+    { name: "Day 3: Drive to Naran", lat: 34.9099, lon: 73.6453 },
+    { name: "Day 4: Drive to Raikot Bridge", lat: 35.4170, lon: 74.1085 },
+    { name: "Day 5: Raikot to Gilgit – Cycling", lat: 35.9140, lon: 74.3807 },
+    { name: "Day 6: Rest Day in Gilgit", lat: 35.9187, lon: 74.3081 },
+    { name: "Day 7: Gilgit to Karimabad – Cycling", lat: 36.3250, lon: 74.6490 },
+    { name: "Day 8: Rest Day at Karimabad", lat: 36.3165, lon: 74.6520 },
+    { name: "Day 9: Karimabad to Gulmit – Cycling", lat: 36.3785, lon: 74.8609 },
+    { name: "Day 10: Explore Gulmit, Hussaini, Passu", lat: 36.4172, lon: 74.8570 },
+    { name: "Day 11: Passu to Sost – Cycling", lat: 36.6885, lon: 75.2928 },
+    { name: "Day 12: Rest Day at Sost", lat: 36.6885, lon: 75.2928 },
+    { name: "Day 13: Sost to Khunjerab Pass – Cycling/Vehicle", lat: 36.8502, lon: 75.4269 },
+    { name: "Day 14: Rest Day in Gulmit/Ghulkin", lat: 36.4075, lon: 74.7940 },
+    { name: "Day 15: Travel to Fairy Meadows", lat: 35.3967, lon: 74.6076 },
+    { name: "Day 16: Nanga Parbat Base Camp", lat: 35.3750, lon: 74.5890 },
+    { name: "Day 17: Rest Day at Fairy Meadows", lat: 35.3967, lon: 74.6076 },
+    { name: "Day 18: Travel to Naran Valley", lat: 34.9099, lon: 73.6453 },
+    { name: "Day 19: Naran to Islamabad", lat: 33.6844, lon: 73.0479 },
+    { name: "Day 20: Rest Day in Islamabad", lat: 33.6938, lon: 73.0652 },
+    { name: "Day 21: Departure from Airport", lat: 33.5603, lon: 72.8516 }
+  ];
+
+  waypoints.forEach(function(wp) {
+    L.marker([wp.lat, wp.lon]).addTo(map)
+      .bindTooltip(wp.name, { permanent: true, className: 'waypoint-tooltip' })
+      .openTooltip();
+  });
+
+  var routeLine = waypoints.map(wp => [wp.lat, wp.lon]);
+  var routePath = L.polyline(routeLine, { color: 'blue', weight: 4 }).addTo(map);
+  map.fitBounds(routePath.getBounds(), { padding: [60, 60] });
+
+  map.addControl(new L.Control.Fullscreen());
+</script>
+
+<style>
+  .waypoint-tooltip {
+    border: 1px solid #0078A8;
+    padding: 5px;
+    font-size: 10px;
+    font-weight: bold;
+    color: #0078A8;
+    opacity: 0.8;
+  }
+
+  @media (max-width: 768px) {
+    #map {
+      height: 4000vh;
+    }
+  }
+</style>
