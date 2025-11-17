@@ -1,0 +1,67 @@
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<!-- Leaflet JavaScript -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Leaflet Fullscreen Plugin CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-fullscreen/1.3.0/leaflet.fullscreen.min.css" />
+<!-- Leaflet Fullscreen Plugin JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-fullscreen/1.3.0/leaflet.fullscreen.min.js"></script>
+
+<div id="map" style="width: 100%; height: 2800px;"></div>
+
+<script>
+  var map = L.map('map').setView([33.7, 73.0], 6);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  var waypoints = [
+    { name: "Day 1 – Arrival in Islamabad", lat: 33.6844, lon: 73.0479 },
+    { name: "Day 2 – Islamabad - Skardu", lat: 35.3150, lon: 75.6337 },
+    { name: "Day 3 – Skardu → Fairy Meadows (via Raikot & Chilas)", lat: 35.3800, lon: 74.5800 },
+    { name: "Day 4 – Nanga Parbat Base Camp or Fairy Meadows Leisure", lat: 35.2550, lon: 74.5950 },
+    { name: "Day 5 – Fairy Meadows → Gilgit (via Raikot & Jaglot)", lat: 35.9300, lon: 74.3000 },
+    { name: "Day 6 – Gilgit → Karimabad (Hunza)", lat: 36.3167, lon: 74.6500 },
+    { name: "Day 7 – Central Hunza Exploration", lat: 36.3185, lon: 74.6600 },
+    { name: "Day 8 – Leisure Day in Central Hunza", lat: 36.3185, lon: 74.6600 },
+    { name: "Day 9 – Hopper Valley → Attabad Lake → Upper Hunza (Gulmit)", lat: 36.3900, lon: 74.8700 },
+    { name: "Day 10 – Ghulkin → Hussaini Bridge → Passu & Borith Lake", lat: 36.4550, lon: 74.8750 },
+    { name: "Day 11 – Khunjerab Pass → Gilgit", lat: 36.8170, lon: 75.0910 },
+    { name: "Day 12 – Gilgit - Islamabad (or drive via Karakoram Highway)", lat: 33.6844, lon: 73.0479 },
+    { name: "Day 13 – Islamabad City Tour & Departure", lat: 33.7000, lon: 73.0500 }
+  ];
+
+  waypoints.forEach(function(waypoint) {
+    L.marker([waypoint.lat, waypoint.lon]).addTo(map)
+      .bindTooltip(waypoint.name, { permanent: true, className: 'waypoint-tooltip' })
+      .openTooltip();
+  });
+
+  var routeLine = waypoints.map(wp => [wp.lat, wp.lon]);
+  var routePath = L.polyline(routeLine, { color: 'blue', weight: 4 }).addTo(map);
+
+  map.fitBounds(routePath.getBounds(), { padding: [60, 60] });
+
+  map.addControl(new L.Control.Fullscreen());
+</script>
+
+<style>
+  .waypoint-tooltip {
+    border: 1px solid #0078A8;
+    padding: 5px;
+    font-size: 10px;
+    font-weight: bold;
+    color: #0078A8;
+    background: white;
+    opacity: 0.95;
+  }
+
+  @media (max-width: 768px) {
+    #map {
+      height: 4000vh;
+    }
+  }
+</style>
