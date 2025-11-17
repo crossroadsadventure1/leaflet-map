@@ -1,0 +1,70 @@
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<!-- Leaflet JavaScript -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Leaflet Fullscreen Plugin CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-fullscreen/1.3.0/leaflet.fullscreen.min.css" />
+<!-- Leaflet Fullscreen Plugin JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-fullscreen/1.3.0/leaflet.fullscreen.min.js"></script>
+
+<div id="map" style="width: 100%; height: 2800px;"></div>
+
+<script>
+  var map = L.map('map').setView([33.7, 73.0], 6);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  var waypoints = [
+    { name: "Day 1 - Arrival in Islamabad", lat: 33.6844, lon: 73.0479 },
+    { name: "Day 2 - Scenic Flight to Skardu – Cold Desert & Lower Kachura Lake", lat: 35.3150, lon: 75.6300 },
+    { name: "Day 3 - Drive to Hussainabad", lat: 35.4100, lon: 75.6900 },
+    { name: "Day 4 - Hike to Marsur Rock – Return to Hussainabad", lat: 35.4185, lon: 75.7000 },
+    { name: "Day 5 - Drive to Raikot Bridge", lat: 35.3500, lon: 74.6200 },
+    { name: "Day 6 - Raikot – Jeep to Tato – Trek to Fairy Meadows", lat: 35.3800, lon: 74.5800 },
+    { name: "Day 7 - Trek to Nanga Parbat Base Camp – Return to Fairy Meadows", lat: 35.2550, lon: 74.5950 },
+    { name: "Day 8 - Fairy Meadows – Trek Down – Drive to Gilgit", lat: 35.9300, lon: 74.3000 },
+    { name: "Day 9 - Gilgit to Naltar Valley", lat: 36.1400, lon: 74.1100 },
+    { name: "Day 10 - Naltar to Karimabad (Hunza)", lat: 36.3150, lon: 74.6550 },
+    { name: "Day 11 - Central Hunza Exploration", lat: 36.3185, lon: 74.6600 },
+    { name: "Day 12 - Hopar Valley – Attabad Lake – Gulmit", lat: 36.3900, lon: 74.8700 },
+    { name: "Day 13 - Passu, Ghulkin & White Glacier", lat: 36.4550, lon: 74.8750 },
+    { name: "Day 14 - Drive Back to Gilgit", lat: 35.9250, lon: 74.3150 },
+    { name: "Day 15 - Flight to Islamabad", lat: 33.6855, lon: 73.0550 },
+    { name: "Day 16 - Departure from Islamabad", lat: 33.5603, lon: 72.8516 }
+  ];
+
+  waypoints.forEach(function(waypoint) {
+    L.marker([waypoint.lat, waypoint.lon]).addTo(map)
+      .bindTooltip(waypoint.name, { permanent: true, className: 'waypoint-tooltip' })
+      .openTooltip();
+  });
+
+  var routeLine = waypoints.map(wp => [wp.lat, wp.lon]);
+  var routePath = L.polyline(routeLine, { color: 'blue', weight: 4 }).addTo(map);
+
+  map.fitBounds(routePath.getBounds(), { padding: [60, 60] });
+
+  map.addControl(new L.Control.Fullscreen());
+</script>
+
+<style>
+  .waypoint-tooltip {
+    border: 1px solid #0078A8;
+    padding: 5px;
+    font-size: 10px;
+    font-weight: bold;
+    color: #0078A8;
+    background: white;
+    opacity: 0.95;
+  }
+
+  @media (max-width: 768px) {
+    #map {
+      height: 4000vh;
+    }
+  }
+</style>
