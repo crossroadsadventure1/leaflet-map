@@ -1,0 +1,85 @@
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<!-- Leaflet JavaScript -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Leaflet Fullscreen Plugin CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-fullscreen/1.3.0/leaflet.fullscreen.min.css" />
+
+<!-- Leaflet Fullscreen Plugin JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-fullscreen/1.3.0/leaflet.fullscreen.min.js"></script>
+
+<div id="map" style="width: 100%; height: 3600px;"></div>
+
+<script>
+  var map = L.map('map').setView([30.5, 71.5], 5);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  /* ----------------------------
+       YOUR 18 DAYS (MARKERS)
+  ----------------------------- */
+
+  var dayMarkers = [
+    { name: "Day 1 – Karachi to Makli Necropolis and Hyderabad", lat: 24.8607, lon: 67.0011 },
+    { name: "Day 2 – Hyderabad to Mohenjo-Daro and Sukkur", lat: 25.3960, lon: 68.3578 },
+    { name: "Day 3 – Sukkur to Bahawalpur", lat: 27.7052, lon: 68.8574 },
+    { name: "Day 4 – Bahawalpur to Multan", lat: 29.3956, lon: 71.6836 },
+    { name: "Day 5 – Multan to Lahore", lat: 30.1984, lon: 71.4687 },
+    { name: "Day 6 – Lahore Full Day 1", lat: 31.5204, lon: 74.3587 },
+    { name: "Day 7 – Lahore Full Day 2", lat: 31.5204, lon: 74.3587 },
+    { name: "Day 8 – Lahore to Rohtas Fort and Islamabad", lat: 32.9655, lon: 73.5800 },
+    { name: "Day 9 – Islamabad and Optional Taxila Visit", lat: 33.6844, lon: 73.0479 },
+    { name: "Day 10 – Islamabad → Skardu-Shigar (Flight)", lat: 35.2976, lon: 75.6337 },
+    { name: "Day 11 – Skardu → Gilgit", lat: 35.8800, lon: 74.3500 },
+    { name: "Day 12 – Gilgit → Karimabad, Hunza", lat: 36.3189, lon: 74.6521 },
+    { name: "Day 13 – Exploring Central Hunza", lat: 36.3189, lon: 74.6521 },
+    { name: "Day 14 – Gojal Valley (Attabad–Gulmit–Ghulkin)", lat: 36.3900, lon: 74.8600 },
+    { name: "Day 15 – Passu, Borith Lake & Return to Gilgit", lat: 36.5000, lon: 74.8800 },
+    { name: "Day 16 – Gilgit → Bisham City", lat: 35.2200, lon: 72.4800 },
+    { name: "Day 17 – Bisham → Taxila → Islamabad", lat: 33.7473, lon: 72.8362 },
+    { name: "Day 18 – Airport Transfer (Islamabad Intl Airport)", lat: 33.5603, lon: 72.8516 }
+  ];
+
+  dayMarkers.forEach(function(wp) {
+    L.marker([wp.lat, wp.lon]).addTo(map)
+      .bindTooltip(wp.name, { permanent: true, className: 'waypoint-tooltip' })
+      .openTooltip();
+  });
+
+  /* ----------------------------
+        ROUTE LINE (AUTO)
+  ----------------------------- */
+
+  var routeLine = dayMarkers.map(wp => [wp.lat, wp.lon]);
+
+  var routePath = L.polyline(routeLine, {
+    color: 'blue',
+    weight: 4
+  }).addTo(map);
+
+  map.fitBounds(routePath.getBounds(), { padding: [60, 60] });
+
+  map.addControl(new L.Control.Fullscreen());
+</script>
+
+<style>
+  .waypoint-tooltip {
+    border: 1px solid #0078A8;
+    padding: 5px;
+    font-size: 10px;
+    font-weight: bold;
+    color: #0078A8;
+    opacity: 0.85;
+    background: white;
+  }
+
+  @media (max-width: 768px) {
+    #map {
+      height: 4500px;
+    }
+  }
+</style>
